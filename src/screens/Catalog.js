@@ -5,20 +5,24 @@ import {
   StyleSheet,
   StatusBar,
   Appearance,
+  ActivityIndicator,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { getLeaguesApi, getLeaguesLogoByUrlApi } from "../api/leagues";
+import { getAllTeamsApi } from "../api/teams";
 import LeaguesList from "../components/LeaguesList";
 import { API_HOST } from "../utils/constants";
-//import worldCupImage from "../assets/WorldCupLogo.png";
 
 export default function Catalog() {
   const [leagues, setLeagues] = useState([]);
+  const [allTeams, setAllTeams] = useState([]); // teams = [], setTeams modifies teams.
   const [nextPage, setNextPage] = useState(null);
+  const [isLoading, setIsLoading] = useState(true); // Add loading state
 
   useEffect(() => {
     (async () => {
       await loadLeagues();
+      await loadAllTeams();
     })();
   }, []);
 
@@ -57,25 +61,56 @@ export default function Catalog() {
     }
   };
 
+  const loadAllTeams = async () => {
+    try {
+      const response = await getAllTeamsApi();
+      let allTeamsArray = response.map((team) => {
+        return { ...team, image: `${API_HOST}/clubs/${team.id}/image` };
+      });
+      setAllTeams([...allTeams, ...allTeamsArray]); //setTeams with whatever is there and push new teamsArray content
+    } catch (error) {
+      console.log("loadTeams in Teams.js (Screens) --- ", error);
+    }
+    setIsLoading(false); // Set loading state to false after data has been fetched
+  };
+
   const colorScheme = Appearance.getColorScheme();
   const backgroundColor = colorScheme === "dark" ? "black" : "white";
   const StatusbackgroundColor = colorScheme === "dark" ? "black" : "white";
   const Statuscolor =
     StatusbackgroundColor === "black" ? "light-content" : "dark-content";
-  //console.log(colorScheme);
 
   return (
-    <View style={{ backgroundColor: backgroundColor }}>
+    <View style={[styles.container, { backgroundColor: backgroundColor }]}>
       <StatusBar
         backgroundColor={StatusbackgroundColor}
         barStyle={Statuscolor}
       />
-      <LeaguesList
-        leagues={leagues}
-        loadLeagues={loadLeagues}
-        isNext={nextPage}
-        backgroundColor={backgroundColor}
-      />
+      {isLoading ? (
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" />
+          <Text style={{ top: 10 }}>Loading Ultimate Cards</Text>
+        </View>
+      ) : (
+        <LeaguesList
+          leagues={leagues}
+          allTeams={allTeams}
+          loadLeagues={loadLeagues}
+          isNext={nextPage}
+          backgroundColor={backgroundColor}
+        />
+      )}
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+});

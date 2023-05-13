@@ -8,9 +8,11 @@ import {
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import getColorsByLeagues from "../utils/getColorByLeague";
+import { API_HOST } from "../utils/constants";
 
 const LeagueCard = (props) => {
-  const { liga } = props;
+  const { liga, allTeams } = props;
+  //console.log("league card ----------------", allTeams);
   const navigation = useNavigation();
   const [loading, setLoading] = useState(false); //setting state for Loaders
 
@@ -19,8 +21,9 @@ const LeagueCard = (props) => {
   const bgStyles = { backgroundColor: leagueColor, ...styles.bgStyles };
 
   const goToLeague = () => {
-    //console.log(`REDIRECCIONANDO A ${liga.name}`);
-    navigation.navigate("Teams", { id: liga.id });
+    console.log(`REDIRECCIONANDO A ${liga.name} de id: ${liga.id}`);
+    const filteredTeams = allTeams.filter((team) => team.league === liga.id); //Filter allTeams by leagueID
+    navigation.navigate("Teams", { id: liga.id, filteredTeams: filteredTeams });
   };
 
   return (

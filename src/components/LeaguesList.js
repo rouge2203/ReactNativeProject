@@ -11,18 +11,19 @@ import React from "react";
 import LeagueCard from "./LeagueCard";
 
 const LeaguesList = (props) => {
-  const { leagues, loadLeagues, isNext, backgroundColor } = props;
+  const { leagues, allTeams, loadLeagues, isNext, backgroundColor } = props;
 
   const loadMore = () => {
     loadLeagues();
   };
+
   return (
     <FlatList
       data={leagues}
       numColumns={2}
       showsVerticalScrollIndicator={false}
       keyExtractor={(league) => String(league.id)}
-      renderItem={({ item }) => <LeagueCard liga={item} />}
+      renderItem={({ item }) => <LeagueCard liga={item} allTeams={allTeams} />}
       contentContainerStyle={styles.flatListContentContainer}
       style={backgroundColor}
       onEndReached={isNext && loadMore}

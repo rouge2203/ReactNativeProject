@@ -8,23 +8,12 @@ export async function getLeaguesApi(endpointURL) {
     "Content-Type": "application/json",
   };
 
-  const response = await fetch(endpointURL || url, { headers });
-  const result = await response.json();
-  return result;
-}
-
-export async function getLeaguesLogoByUrlApi(idLeague) {
-  const url = `${API_HOST}/leagues/${idLeague}`;
-  const headers = {
-    "X-AUTH-TOKEN": token,
-    "Content-Type": "application/json",
-  };
   try {
-    const response = await fetch(url, { headers });
-    const result = await response;
+    const response = await fetch(endpointURL || url, { headers });
+    const result = await response.json();
     return result;
   } catch (error) {
-    throw error;
+    console.log("Error en league api ----", error);
   }
 }
 

@@ -1,5 +1,6 @@
 export const API_HOST = "https://futdb.app/api";
-export const API_KEY = "5a23bda2-fa22-4b67-8624-b9a09b08a798";
+//export const API_KEY = "5a23bda2-fa22-4b67-8624-b9a09b08a798";
+export const API_KEY = "b454701d-bea7-4e3d-96d4-a8a8c2917163"; //ruizalejandro99@
 
 export const LEAGUE_BG_COLORS = {
   0: "#C9C8C6",
