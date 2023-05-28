@@ -19,22 +19,13 @@ const TeamCard = (props) => {
   const navigation = useNavigation();
 
   const leagueColor = getColorsByLeagues(team.league);
-  const bgStyles = { backgroundColor: leagueColor, ...styles.bgStyles };
+  const leagueColor2 = "#9e2a2b";
+  const bgStyles = { backgroundColor: leagueColor2, ...styles.bgStyles };
 
   const goToTeam = () => {
-    console.log(`REDIRECCIONANDO A ${team.name}`);
+    //console.log(`REDIRECCIONANDO A ${team.name}`);
+    navigation.navigate("Players", { teamId: team.id, teamName: team.name });
   };
-
-  // useEffect(() => {
-  //   const fetchTeamLogo = async () => {
-  //     setLoading(true);
-  //     const image = await getTeamLogoByUrlApi(team.id);
-  //     setImageClub(image);
-  //     setLoading(false);
-  //   };
-
-  //   fetchTeamLogo();
-  // }, [team.id]);
 
   return (
     <TouchableWithoutFeedback onPress={goToTeam}>
@@ -99,7 +90,6 @@ const styles = StyleSheet.create({
   },
   name: {
     color: "#fff",
-    fontWeight: "bold",
     fontSize: 20,
     left: 20,
   },

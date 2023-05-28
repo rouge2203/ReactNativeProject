@@ -5,7 +5,7 @@ const token = API_KEY;
 export async function getAllTeamsApi() {
   allTeams = [];
   pageCurrent = 1;
-  pageTotal = 3;
+  pageTotal = 34;
 
   while (pageCurrent <= pageTotal) {
     const url = `${API_HOST}/clubs?page=${pageCurrent}`;

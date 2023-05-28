@@ -64,10 +64,10 @@ export default function Catalog() {
   const loadAllTeams = async () => {
     try {
       const response = await getAllTeamsApi();
-      let allTeamsArray = response.map((team) => {
-        return { ...team, image: `${API_HOST}/clubs/${team.id}/image` };
-      });
-      setAllTeams([...allTeams, ...allTeamsArray]); //setTeams with whatever is there and push new teamsArray content
+      // let allTeamsArray = response.map((team) => {
+      //   return { ...team, image: `${API_HOST}/clubs/${team.id}/image` };
+      // });
+      setAllTeams([...allTeams, ...response]); //setTeams with whatever is there and push new teamsArray content
     } catch (error) {
       console.log("loadTeams in Teams.js (Screens) --- ", error);
     }

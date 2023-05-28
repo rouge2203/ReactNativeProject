@@ -17,11 +17,12 @@ const LeagueCard = (props) => {
   const [loading, setLoading] = useState(false); //setting state for Loaders
 
   const leagueColor = getColorsByLeagues(liga.id);
+  const leagueColor2 = "#9e2a2b";
 
-  const bgStyles = { backgroundColor: leagueColor, ...styles.bgStyles };
+  const bgStyles = { backgroundColor: leagueColor2, ...styles.bgStyles };
 
   const goToLeague = () => {
-    console.log(`REDIRECCIONANDO A ${liga.name} de id: ${liga.id}`);
+    //console.log(`REDIRECCIONANDO A ${liga.name} de id: ${liga.id}`);
     const filteredTeams = allTeams.filter((team) => team.league === liga.id); //Filter allTeams by leagueID
     navigation.navigate("Teams", { id: liga.id, filteredTeams: filteredTeams });
   };
@@ -72,7 +73,7 @@ const styles = StyleSheet.create({
     padding: 5,
     alignItems: "center",
     justifyContent: "flex-start",
-    borderColor: "#f0dc8a",
+    borderColor: "#e09f3e",
     borderWidth: 1,
   },
   number: {
@@ -92,9 +93,8 @@ const styles = StyleSheet.create({
     fontSize: 10,
   },
   name: {
-    color: "#fff",
-    fontWeight: "bold",
-    fontSize: 15,
+    color: "white",
+    fontSize: 17,
   },
 });
 

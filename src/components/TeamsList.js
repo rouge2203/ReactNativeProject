@@ -13,10 +13,6 @@ import TeamCard from "./TeamCard";
 const TeamsList = (props) => {
   const { backgroundColor, loadTeams, page, teams } = props;
 
-  const loadMoreTeams = () => {
-    loadTeams(page);
-  };
-
   return (
     <FlatList
       data={teams}
@@ -42,8 +38,8 @@ const TeamsList = (props) => {
 const styles = StyleSheet.create({
   flatListContentContainer: {
     paddingHorizontal: 5,
-    paddingBottom: 45,
-    marginTop: Platform.OS === "ios" ? 15 : 0,
+    paddingBottom: 30,
+    marginTop: Platform.OS === "ios" ? 0 : 0,
   },
   spinner: {
     marginTop: 30,
