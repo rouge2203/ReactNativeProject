@@ -11,9 +11,9 @@ const Stats_ChildAttributes = (props) => {
         <Text style={styles.attributeTitle}>{attributeRating}</Text>
       </View>
 
-      {Object.entries(childAttributes).map(([key, value]) => {
+      {Object.entries(childAttributes).map(([key, value], index) => {
         return (
-          <>
+          <React.Fragment key={index}>
             <View style={styles.childAttributeTitleBlock}>
               <Text style={styles.childAttributeTitle}>
                 {key.charAt(0).toUpperCase() + key.slice(1)}
@@ -26,7 +26,7 @@ const Stats_ChildAttributes = (props) => {
                 <View style={[styles.barFill, { width: `${value}%` }]}></View>
               </View>
             </View>
-          </>
+          </React.Fragment>
         );
       })}
     </View>

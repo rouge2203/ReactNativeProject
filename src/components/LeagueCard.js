@@ -46,8 +46,6 @@ const LeagueCard = (props) => {
               <Image
                 source={{ uri: liga.image }}
                 style={styles.image}
-                onLoadStart={() => setLoading(true)}
-                onLoad={() => setLoading(false)}
                 onError={() => setLoading(true)}
               />
             )}

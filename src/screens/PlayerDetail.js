@@ -10,9 +10,11 @@ import React, { useEffect, useState } from "react";
 import Header2 from "../components/PlayerDetail/Header2";
 import Stats from "../components/PlayerDetail/Stats";
 import { getPlayerDetailApi } from "../api/playerDetail";
+import Icon from "react-native-vector-icons/FontAwesome5";
 
 const PlayerDetail = (props) => {
   const {
+    navigation,
     route: { params },
   } = props;
 
@@ -23,11 +25,34 @@ const PlayerDetail = (props) => {
 
   const [playerInfo, setPlayerInfo] = useState(null);
   const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     (async () => {
       await loadPlayer();
     })();
   }, []);
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <Icon
+          name="star"
+          color="#e09f3e"
+          size={20}
+          style={{ marginRight: 20 }}
+        />
+      ),
+      headerLeft: () => (
+        <Icon
+          name="arrow-left"
+          color="#540b0e"
+          size={20}
+          style={{ marginLeft: 20 }}
+          onPress={navigation.goBack}
+        />
+      ),
+    });
+  }, [navigation, params]);
 
   const loadPlayer = async () => {
     try {

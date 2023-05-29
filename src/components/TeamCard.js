@@ -4,6 +4,7 @@ import {
   Text,
   Image,
   TouchableWithoutFeedback,
+  ActivityIndicator,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
@@ -14,7 +15,7 @@ import getColorsByLeagues from "../utils/getColorByLeague";
 const TeamCard = (props) => {
   const { team } = props;
   const [loading, setLoading] = useState(false);
-  const [imageClub, setImageClub] = useState(null);
+  const [imageError, setImageError] = useState(false);
 
   const navigation = useNavigation();
 
@@ -34,17 +35,13 @@ const TeamCard = (props) => {
           <View style={bgStyles}>
             <Text style={styles.number}>#{`${team.id}`.padStart(2, 0)}</Text>
             {loading ? (
-              <Text style={styles.loadingMessage}>Logo...</Text>
+              <ActivityIndicator style={styles.loadingMessage} size={"small"} /> //not being used in this case
             ) : null}
+            {imageError && <Text style={styles.loadingMessage}>X</Text>}
             <Image
               source={{ uri: team.image }}
-              //source={require("../assets/fifa.png")}
               style={styles.image}
-              onLoadStart={() => setLoading(true)}
-              onLoad={() => setLoading(false)}
-              onError={() => (
-                <Text style={styles.loadingMessage}>No carga</Text>
-              )}
+              onError={() => setImageError(true)}
             />
             <Text style={styles.name}>{team.name}</Text>
           </View>
@@ -86,7 +83,12 @@ const styles = StyleSheet.create({
   },
   loadingMessage: {
     color: "#fff",
-    fontSize: 10,
+    fontSize: 20,
+    borderWidth: 1,
+    borderColor: "white",
+    marginRight: -35,
+    marginLeft: 15,
+    padding: 2,
   },
   name: {
     color: "#fff",
