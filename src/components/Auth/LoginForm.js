@@ -25,7 +25,7 @@ const LoginForm = () => {
     onSubmit: (data) => {
       const { username, password } = data;
       if (username !== user.username || password !== user.password) {
-        console.log("Login incorrecto");
+        //console.log("Login incorrecto");
         setUnvalidCredentials("Unvalid credentials, try again");
       } else {
         login(userDetails);

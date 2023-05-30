@@ -11,6 +11,8 @@ import Header2 from "../components/PlayerDetail/Header2";
 import Stats from "../components/PlayerDetail/Stats";
 import { getPlayerDetailApi } from "../api/playerDetail";
 import Icon from "react-native-vector-icons/FontAwesome5";
+import Favorite from "../components/PlayerDetail/Favorite";
+import useAuth from "../hooks/useAuth";
 
 const PlayerDetail = (props) => {
   const {
@@ -26,6 +28,8 @@ const PlayerDetail = (props) => {
   const [playerInfo, setPlayerInfo] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const { auth } = useAuth();
+
   useEffect(() => {
     (async () => {
       await loadPlayer();
@@ -34,14 +38,7 @@ const PlayerDetail = (props) => {
 
   useEffect(() => {
     navigation.setOptions({
-      headerRight: () => (
-        <Icon
-          name="star"
-          color="#e09f3e"
-          size={20}
-          style={{ marginRight: 20 }}
-        />
-      ),
+      headerRight: () => auth && <Favorite player={playerInfo} />,
       headerLeft: () => (
         <Icon
           name="arrow-left"
@@ -52,7 +49,7 @@ const PlayerDetail = (props) => {
         />
       ),
     });
-  }, [navigation, params]);
+  }, [navigation, params, auth, playerInfo]);
 
   const loadPlayer = async () => {
     try {
