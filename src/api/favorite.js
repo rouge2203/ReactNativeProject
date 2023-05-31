@@ -5,7 +5,11 @@ import { FAVORITE_STORAGE } from "../utils/constants";
 export const getFavoritePlayersaApi = async () => {
   try {
     const response = await AsyncStorage.getItem(FAVORITE_STORAGE);
-    return JSON.parse(response || []);
+    if (response) {
+      return JSON.parse(response);
+    } else {
+      return []; // directly return an empty array if no data found
+    }
   } catch (error) {
     throw error;
   }
